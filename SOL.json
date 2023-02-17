@@ -1,0 +1,1028 @@
+[
+    {
+        "id": "2e53811e01213c20",
+        "type": "tab",
+        "label": "SOL",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a04930baa7887e30",
+        "type": "snmp subtree",
+        "z": "2e53811e01213c20",
+        "host": "192.168.0.10",
+        "version": "2c",
+        "timeout": 5,
+        "community": "Sierra_123R",
+        "auth": "noAuthNoPriv",
+        "authprot": "MD5",
+        "privprot": "DES",
+        "oids": "1.3.6.1.4.1.2011.6.164.1.13.1.3",
+        "name": "SOC",
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "e33545e1032f3166"
+            ]
+        ]
+    },
+    {
+        "id": "ba91004524658a68",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "a04930baa7887e30"
+            ]
+        ]
+    },
+    {
+        "id": "6f26329905963361",
+        "type": "snmp subtree",
+        "z": "2e53811e01213c20",
+        "host": "192.168.0.10",
+        "version": "2c",
+        "timeout": 5,
+        "community": "Sierra_123R",
+        "auth": "noAuthNoPriv",
+        "authprot": "MD5",
+        "privprot": "DES",
+        "oids": "1.3.6.1.4.1.2011.6.164.1.13.1.4",
+        "name": "STE",
+        "x": 390,
+        "y": 120,
+        "wires": [
+            [
+                "ee7e23a792723666"
+            ]
+        ]
+    },
+    {
+        "id": "a3f105a4611bfef8",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 220,
+        "y": 120,
+        "wires": [
+            [
+                "6f26329905963361",
+                "104421f52f8516b7"
+            ]
+        ]
+    },
+    {
+        "id": "52d54e8eed0018af",
+        "type": "snmp subtree",
+        "z": "2e53811e01213c20",
+        "host": "192.168.0.10",
+        "version": "2c",
+        "timeout": 5,
+        "community": "Sierra_123R",
+        "auth": "noAuthNoPriv",
+        "authprot": "MD5",
+        "privprot": "DES",
+        "oids": "1.3.6.1.4.1.2011.6.164.1.13.1.7",
+        "name": "STP",
+        "x": 390,
+        "y": 160,
+        "wires": [
+            [
+                "49fdb69d2b5e4405"
+            ]
+        ]
+    },
+    {
+        "id": "104421f52f8516b7",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 220,
+        "y": 160,
+        "wires": [
+            [
+                "52d54e8eed0018af",
+                "ba91004524658a68"
+            ]
+        ]
+    },
+    {
+        "id": "db23e0378c75b607",
+        "type": "inject",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "40",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "a3f105a4611bfef8"
+            ]
+        ]
+    },
+    {
+        "id": "49fdb69d2b5e4405",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "STP",
+        "func": "msg.topic = \"STP\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 160,
+        "wires": [
+            [
+                "2315b85842128d1d"
+            ]
+        ]
+    },
+    {
+        "id": "a02edfeb8169a78d",
+        "type": "change",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"STP\":msg.payload[0]\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 160,
+        "wires": [
+            [
+                "d822d34580bc9a29"
+            ]
+        ]
+    },
+    {
+        "id": "2315b85842128d1d",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "STP",
+        "func": "if (msg.topic == \"STP\") {\n    msg.payload = msg.payload[0].value;\n    return msg;\n} else return null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 160,
+        "wires": [
+            [
+                "5b009e0c5039d920"
+            ]
+        ]
+    },
+    {
+        "id": "5b009e0c5039d920",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "To Float",
+        "func": "msg.payload = parseFloat(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 160,
+        "wires": [
+            [
+                "a02edfeb8169a78d"
+            ]
+        ]
+    },
+    {
+        "id": "d822d34580bc9a29",
+        "type": "influxdb out",
+        "z": "2e53811e01213c20",
+        "influxdb": "297047232b6b472c",
+        "name": "",
+        "measurement": "SOL",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 1350,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "951a3a53014dd7a9",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SID-STS-SCP",
+        "func": "if (msg.topic == \"STE\") {\n    msg.payload = [1,Date.now(),400];\n    return msg;\n} else return null;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 80,
+        "wires": [
+            [
+                "661ea79301414508"
+            ]
+        ]
+    },
+    {
+        "id": "ee7e23a792723666",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "STE",
+        "func": "msg.topic = \"STE\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 120,
+        "wires": [
+            [
+                "951a3a53014dd7a9",
+                "5dc73f6bd3ac6fca"
+            ]
+        ]
+    },
+    {
+        "id": "661ea79301414508",
+        "type": "change",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"SID\":msg.payload[0],\t   \"STS\":msg.payload[1],\t   \"SCP\":msg.payload[2]   \t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 80,
+        "wires": [
+            [
+                "d822d34580bc9a29"
+            ]
+        ]
+    },
+    {
+        "id": "9350ef41bfbdee53",
+        "type": "change",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"STE\":msg.payload[0]\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 120,
+        "wires": [
+            [
+                "d822d34580bc9a29"
+            ]
+        ]
+    },
+    {
+        "id": "5dc73f6bd3ac6fca",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "STE",
+        "func": "if (msg.topic == \"STE\") {\n    msg.payload = msg.payload[0].value;\n    return msg;\n} else return null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 120,
+        "wires": [
+            [
+                "103e9c53f5032d1c"
+            ]
+        ]
+    },
+    {
+        "id": "103e9c53f5032d1c",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "To Float",
+        "func": "msg.payload = parseFloat(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 120,
+        "wires": [
+            [
+                "9350ef41bfbdee53"
+            ]
+        ]
+    },
+    {
+        "id": "e33545e1032f3166",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SOC",
+        "func": "msg.topic = \"SOC\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 200,
+        "wires": [
+            [
+                "7f4d765b54dcb0d7",
+                "a737d22d1de090e4"
+            ]
+        ]
+    },
+    {
+        "id": "d1d0733636d7366f",
+        "type": "change",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"SOC\":msg.payload[0]\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 200,
+        "wires": [
+            [
+                "d822d34580bc9a29"
+            ]
+        ]
+    },
+    {
+        "id": "7f4d765b54dcb0d7",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SOC",
+        "func": "if (msg.topic == \"SOC\") {\n    msg.payload = msg.payload[0].value;\n    return msg;\n} else return null;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 200,
+        "wires": [
+            [
+                "7db9484523e4fd01"
+            ]
+        ]
+    },
+    {
+        "id": "7db9484523e4fd01",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "To Float",
+        "func": "msg.payload = parseFloat(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 200,
+        "wires": [
+            [
+                "d1d0733636d7366f"
+            ]
+        ]
+    },
+    {
+        "id": "667b3591e4088e83",
+        "type": "change",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"SOL\":msg.payload\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1060,
+        "y": 240,
+        "wires": [
+            [
+                "d822d34580bc9a29"
+            ]
+        ]
+    },
+    {
+        "id": "a737d22d1de090e4",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SOL",
+        "func": "if (msg.topic == \"SOC\") {\n    msg.payload = msg.payload[0].value;\n\n    if (msg.payload > 3) {\n        msg.payload = 1;\n    } else msg.payload = 0;\n\n    return msg;\n} else return null;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 240,
+        "wires": [
+            [
+                "1d3e43f2500cd876"
+            ]
+        ]
+    },
+    {
+        "id": "1d3e43f2500cd876",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "To Float",
+        "func": "msg.payload = parseFloat(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 860,
+        "y": 240,
+        "wires": [
+            [
+                "667b3591e4088e83"
+            ]
+        ]
+    },
+    {
+        "id": "a059904f378f1c3f",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SID",
+        "func": "\nmsg.query = \"select SID FROM SOL WHERE time>=now()-20m AND time<=now() GROUP BY * ORDER BY DESC LIMIT 1\";\nmsg.topic = \"SID\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 360,
+        "wires": [
+            [
+                "ee0a216697deea46"
+            ]
+        ]
+    },
+    {
+        "id": "2531af0abfd11b20",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 360,
+        "wires": [
+            [
+                "a059904f378f1c3f",
+                "288bda08502c6d01"
+            ]
+        ]
+    },
+    {
+        "id": "9ad62fb2c8898358",
+        "type": "inject",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "2531af0abfd11b20"
+            ]
+        ]
+    },
+    {
+        "id": "7a735ad8bf5537ad",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SOL Data with Gain",
+        "func": "context.data = context.data || {};\n\n\nconst SOL = {\n    \"SOL\": [\n        {\n            \"SID\": null,\n            \"STS\": null,\n            \"SCP\": null, \n          \"SOL\": null, \n          \"STP\": null, \n          \"SOV\": null, \n          \"SOC\": null,\n          \"STE\": null \n        }\n      ]\n};\n\nswitch (msg.topic) {\n    case \"SID\":\n        //context.data.BID = 1;\n        context.data.SID = msg.payload[0].SID;\n        msg = null;\n        break;\n\n    case \"STS\":\n        context.data.STS = msg.payload[0].STS;\n        msg = null;\n        break;\n\n    case \"SCP\":\n        //context.data.SOC = msg.payload[0];\n        context.data.SCP = msg.payload[0].SCP;\n        msg = null;\n        break;\n\n    case \"SOL\":\n        //context.data.SOH = null;\n        context.data.SOL = msg.payload[0].SOL;\n        msg = null;\n        break;\n\n    case \"STP\":\n        context.data.STP = msg.payload[0].STP;\n        msg = null;\n        break;\n\n    case \"SOC\":\n        context.data.SOC = msg.payload[0].SOC;\n        msg = null;\n        break;\n\n    case \"STE\":\n        context.data.STE = msg.payload[0].STE;\n        msg = null;\n        break;\n\n       default:\n        msg = null;\n        break;\n}\n\n\n\nif (context.data.SID != null && context.data.STS != null \n    && context.data.SCP != null && context.data.SOL != null  \n    && context.data.STP != null && context.data.SOC != null \n    && context.data.STE != null) {\n    SOL.SOL[0].SID = context.data.SID;\n    SOL.SOL[0].STS = context.data.STS;\n    //SOL.SOL[0].SCP = context.data.SCP;\n    SOL.SOL[0].SCP = 6.35;\n    SOL.SOL[0].SOL = context.data.SOL;\n    SOL.SOL[0].STP = context.data.STP * 100;\n    SOL.SOL[0].SOC = context.data.SOC / 10;\n    SOL.SOL[0].STE = context.data.STE;\n    SOL.SOL[0].SOV = parseFloat((SOL.SOL[0].STP / SOL.SOL[0].SOC).toFixed(2));\n\n    if (context.data.STP == 0 || context.data.SOC == 0){\n        SOL.SOL[0].SOV = 0;\n    }\n\n    \n    context.data = null;\n    return { payload: SOL };\n} else return null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 360,
+        "wires": [
+            [
+                "3710f5e04e1b13f8"
+            ]
+        ]
+    },
+    {
+        "id": "3710f5e04e1b13f8",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "StoreData",
+        "func": "//msg.headers = { Authorization:\"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJJRCI6IjYzM2U5YjliODYzZTQ1Mzk1Njg5MmVlNCIsInVzZXJuYW1lIjoiYWRtaW4iLCJUb2tlbml6ZV9JRCI6IkgzU0hKTXgzYnVaNHlHZkZwQUVwcnc9PSIsInRpbWVzdGFtcCI6MTY2ODY2NjY0MDc4NCwiaWF0IjoxNjY4NjY2NjQwLCJleHAiOjE2Njg2OTU0NDB9.bKrCFw1X7kT0qzCqXKsZpNJ-wJI65AMQcDJcs6v5QsA\"}\n\nvar gauth = global.get(\"auth\");\nvar authorize = \"Bearer \" + gauth;\nmsg.headers = { Authorization: authorize }\nmsg.method = \"POST\"\n//msg.url = \"https://172.16.1.17:5200/Temp/ControllerData/routine\";\nmsg.url = \"https://oneconnect.sierra.lk:5500/ControllerData\";\n//msg.url = \"https://203.94.92.214:5200/login\";\nmsg.headers[\"content-type\"] = \"application/json\"\n\n//{\n//    \"access_token\": \"A_SECRET_TOKEN\",\n//    \"expires_in\": 604800,\n//    \"token_type\": \"Bearer\"\n//}\n\nmsg.payload = {\n    \"TS\": Date.now(),\n    \"SID\": \"GM0120\",\n    \"REC\": msg.payload\n};\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1080,
+        "y": 360,
+        "wires": [
+            [
+                "3f43bd043cfdae38"
+            ]
+        ]
+    },
+    {
+        "id": "3f43bd043cfdae38",
+        "type": "https-node",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "f35b20cb59929881",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 1250,
+        "y": 360,
+        "wires": [
+            [
+                "d25e4b1b9ee5d3bc"
+            ]
+        ]
+    },
+    {
+        "id": "d25e4b1b9ee5d3bc",
+        "type": "debug",
+        "z": "2e53811e01213c20",
+        "name": "debug 150",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1410,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "ee0a216697deea46",
+        "type": "influxdb in",
+        "z": "2e53811e01213c20",
+        "influxdb": "297047232b6b472c",
+        "name": "",
+        "query": "",
+        "rawOutput": false,
+        "precision": "",
+        "retentionPolicy": "",
+        "org": "organisation",
+        "x": 590,
+        "y": 360,
+        "wires": [
+            [
+                "7a735ad8bf5537ad"
+            ]
+        ]
+    },
+    {
+        "id": "185f6172917a029d",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "STS",
+        "func": "\nmsg.query = \"select STS FROM SOL WHERE time>=now()-20m AND time<=now() GROUP BY * ORDER BY DESC LIMIT 1\";\nmsg.topic = \"STS\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 400,
+        "wires": [
+            [
+                "ee0a216697deea46"
+            ]
+        ]
+    },
+    {
+        "id": "288bda08502c6d01",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 400,
+        "wires": [
+            [
+                "185f6172917a029d",
+                "957490273599f17e"
+            ]
+        ]
+    },
+    {
+        "id": "3cddfe19bd99534a",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SCP",
+        "func": "\nmsg.query = \"select SCP FROM SOL WHERE time>=now()-20m AND time<=now() GROUP BY * ORDER BY DESC LIMIT 1\";\nmsg.topic = \"SCP\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "ee0a216697deea46"
+            ]
+        ]
+    },
+    {
+        "id": "957490273599f17e",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 440,
+        "wires": [
+            [
+                "3cddfe19bd99534a",
+                "3c6f7bd3991e9583"
+            ]
+        ]
+    },
+    {
+        "id": "7807bb2a972ac2e1",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "STE",
+        "func": "\nmsg.query = \"select STE FROM SOL WHERE time>=now()-20m AND time<=now() GROUP BY * ORDER BY DESC LIMIT 1\";\nmsg.topic = \"STE\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 480,
+        "wires": [
+            [
+                "ee0a216697deea46"
+            ]
+        ]
+    },
+    {
+        "id": "3c6f7bd3991e9583",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 480,
+        "wires": [
+            [
+                "7807bb2a972ac2e1",
+                "9a30172a1f6272d9"
+            ]
+        ]
+    },
+    {
+        "id": "18d5899b41eb685d",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "STP",
+        "func": "\nmsg.query = \"select STP FROM SOL WHERE time>=now()-20m AND time<=now() GROUP BY * ORDER BY DESC LIMIT 1\";\nmsg.topic = \"STP\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 520,
+        "wires": [
+            [
+                "ee0a216697deea46"
+            ]
+        ]
+    },
+    {
+        "id": "9a30172a1f6272d9",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 520,
+        "wires": [
+            [
+                "18d5899b41eb685d",
+                "131b7bdccb3754cb"
+            ]
+        ]
+    },
+    {
+        "id": "e113a7a3603f5c65",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SOC",
+        "func": "\nmsg.query = \"select SOC FROM SOL WHERE time>=now()-20m AND time<=now() GROUP BY * ORDER BY DESC LIMIT 1\";\nmsg.topic = \"SOC\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 560,
+        "wires": [
+            [
+                "ee0a216697deea46"
+            ]
+        ]
+    },
+    {
+        "id": "131b7bdccb3754cb",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 560,
+        "wires": [
+            [
+                "e113a7a3603f5c65",
+                "f91c4464538b579f"
+            ]
+        ]
+    },
+    {
+        "id": "29b47b03c7ef6a77",
+        "type": "function",
+        "z": "2e53811e01213c20",
+        "name": "SOL",
+        "func": "\nmsg.query = \"select SOL FROM SOL WHERE time>=now()-20m AND time<=now() GROUP BY * ORDER BY DESC LIMIT 1\";\nmsg.topic = \"SOL\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 600,
+        "wires": [
+            [
+                "ee0a216697deea46"
+            ]
+        ]
+    },
+    {
+        "id": "f91c4464538b579f",
+        "type": "delay",
+        "z": "2e53811e01213c20",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 200,
+        "y": 600,
+        "wires": [
+            [
+                "29b47b03c7ef6a77"
+            ]
+        ]
+    },
+    {
+        "id": "297047232b6b472c",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": "8086",
+        "protocol": "http",
+        "database": "DEV",
+        "name": "",
+        "usetls": false,
+        "tls": "f35b20cb59929881",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "f35b20cb59929881",
+        "type": "tls-config",
+        "name": "",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "certificate.pem",
+        "keyname": "privatekey.pem",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    }
+]
